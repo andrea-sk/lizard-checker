@@ -18,9 +18,11 @@ def check_assert(expr, data):
     eval_res = eval(expr)
     try:
         assert eval_res
-        print(f"\033[92m{expr} passed\033[0m")
+        print(f"{bcolors.OKGREEN}{expr} passed{bcolors.ENDC}")
+        return True
     except AssertionError:
-        print(f"\033[93m{expr} didn't go well\033[0m")
+        print(f"{bcolors.FAIL}{expr} didn't go well{bcolors.ENDC}")
+        return False
 
 
 def run_checks(avro_folder, configs):
@@ -32,7 +34,7 @@ def run_checks(avro_folder, configs):
     :param configs: A dict of configs (more on this in README.md)
     :type configs: dict
     """
-    # print(f"confs {configs}")
+    res_counter = {"passed": 0, "failed": 0}  # init counter
     for feed in configs["feeds"]:
         glob_expr = list(feed.keys())[0]
         files = glob.glob(os.path.join(avro_folder, glob_expr))
@@ -44,8 +46,16 @@ def run_checks(avro_folder, configs):
                 print(data)
                 # Common checks block
                 for expr in configs["common_checks"]:
-                    check_assert(expr, data)
+                    if check_assert(expr, data):
+                        res_counter["passed"] += 1
+                    else:
+                        res_counter["failed"] += 1
 
                 # Feed specific checks
                 for expr in checks:
-                    check_assert(expr, data)
+                    if check_assert(expr, data):
+                        res_counter["passed"] += 1
+                    else:
+                        res_counter["failed"] += 1
+
+        return res_counter
