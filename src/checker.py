@@ -58,4 +58,4 @@ def run_checks(avro_folder, configs):
                     else:
                         res_counter["failed"] += 1
 
-        return res_counter
+    return res_counter
