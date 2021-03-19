@@ -1,7 +1,7 @@
 import os
 import glob
 
-from .utils import read_avro
+from .utils import read_avro, validate_timestamp  # noqa: F401
 
 
 def check_assert(expr, data):

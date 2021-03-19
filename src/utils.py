@@ -1,3 +1,4 @@
+from datetime import datetime
 import fastavro
 
 
@@ -18,3 +19,29 @@ def read_avro(file_path):
             res.append(record)
 
     return res[0]  # we need just one record to run tests
+
+
+def validate_timestamp(timestamp, territory=None):
+    """
+    Validate a timestamp according to
+
+    :param timestamp: A timestamp from the .avro file.
+    :type timestamp: str
+    :param territory: Territory/Region. Needed to check whether a timezone should be
+      expected or not in the timestamp, defaults to None
+    :type territory: str, default
+    """
+    # GB has no timezone attached
+    if territory == "GB":
+        try:
+            datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+            return True
+        except ValueError:
+            return False
+
+    # Anything else has hour offsets according to the timezone
+    try:
+        datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%f%z")
+        return True
+    except ValueError:
+        return False
