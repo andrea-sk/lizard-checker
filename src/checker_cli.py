@@ -1,6 +1,6 @@
 import json
 import argparse
-from .checker import run_checks
+from checker import run_checks
 
 
 def main():
