@@ -30,6 +30,8 @@ def validate_timestamp(timestamp, territory=None):
     :param territory: Territory/Region. Needed to check whether a timezone should be
       expected or not in the timestamp, defaults to None
     :type territory: str, default
+    :return: `True` if validated, `False` otherwise
+    :rtype: Bool
     """
     # GB has no timezone attached
     if territory == "GB":
