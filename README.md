@@ -2,7 +2,7 @@
 
 Check DIF ouput data in a declarative way using a single cli command.
 
-![](https://github.com/andrea-sk/lizard-checker/images/cli.gif)
+![](https://github.com/andrea-sk/lizard-checker/blob/master/images/cli.gif)
 
 ## Install
 
