@@ -36,7 +36,7 @@ to more than one file, it is possible to use UNIX-style path expansion. In the e
 apply to every file containing the _eviction_ keyword (`us-dcm-user-stream-eviction-2021-03-16.avro` and
 `gb-dcm-user-stream-eviction-2021-03-16.avro` in my case).
 
-It is possible to use the `common_checks` block declare tests that will be applied to **all** feeds in the target folder.
+It is possible to use the `common_checks` block to declare tests that will be applied to **all** feeds in the target folder.
 
 ```json
 {
