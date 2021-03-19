@@ -1,0 +1,4 @@
+pre-commit
+pytest
+flake8
+black
