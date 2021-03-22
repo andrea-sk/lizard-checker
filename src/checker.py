@@ -1,7 +1,10 @@
 import os
 import glob
 
-from utils import read_avro, validate_timestamp, bcolors  # noqa: F401
+from utils import validate_timestamp  # noqa: F401
+
+# Double import requred to make monkeypatching work
+import utils
 
 
 def check_assert(expr, data):
@@ -18,10 +21,10 @@ def check_assert(expr, data):
     eval_res = eval(expr)
     try:
         assert eval_res
-        print(f"{bcolors.OKGREEN}{expr} passed{bcolors.ENDC}")
+        print(f"{utils.bcolors.OKGREEN}{expr} passed{utils.bcolors.ENDC}")
         return True
     except AssertionError:
-        print(f"{bcolors.FAIL}{expr} didn't go well{bcolors.ENDC}")
+        print(f"{utils.bcolors.FAIL}{expr} didn't go well{utils.bcolors.ENDC}")
         return False
 
 
@@ -35,14 +38,13 @@ def run_checks(avro_folder, configs):
     :type configs: dict
     """
     res_counter = {"passed": 0, "failed": 0}  # init counter
+    # TODO: this was done in a rush, it could be probably refactored using
+    #   `itertools`.
     for feed in configs["feeds"]:
-        glob_expr = list(feed.keys())[0]
-        files = glob.glob(os.path.join(avro_folder, glob_expr))
-
         for glob_expr, checks in feed.items():
             files = glob.glob(os.path.join(avro_folder, glob_expr))
             for file in files:
-                data = read_avro(file)
+                data = utils.read_avro(file)
                 print(data)
                 # Common checks block
                 for expr in configs["common_checks"]:
