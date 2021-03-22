@@ -28,7 +28,7 @@ def check_assert(expr, data):
         return False
 
 
-def run_checks(avro_folder, configs):
+def run_checks(avro_folder, configs, export_json=False):
     """
     Traverses a config dict and run checks iteratively
 
@@ -59,5 +59,8 @@ def run_checks(avro_folder, configs):
                         res_counter["passed"] += 1
                     else:
                         res_counter["failed"] += 1
+
+                if export_json:
+                    utils.export_json(data, file)
 
     return res_counter

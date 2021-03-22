@@ -10,7 +10,9 @@ def main():
 
     with open(args.checks_file, "r") as f:
         checks = json.load(f)
-    res = run_checks(avro_path, checks)
+    res = run_checks(avro_path, checks, args.export_json)
+
+    # Print results
     print("")
     print("~" * 50)
     print(f"{bcolors.OKGREEN}PASSED: {res['passed']}{bcolors.ENDC}")
@@ -31,6 +33,13 @@ def get_args():
         type=str,
         metavar="CHECKS_FILE",
         help=".json file containing checks for feeds in AVRO_PATH",
+    )
+    parser.add_argument(
+        "--export-json",
+        required=False,
+        help="Export .avro feeds in json format",
+        action="store_true",
+        default=False,
     )
 
     args = parser.parse_args()
