@@ -87,8 +87,7 @@ pip install -e .
 The repo relies on `pre-commit` hooks to check for code style compliance and format:
 
 ```sh
-pip
-install -r dev-requirements.txt
+pip install -r dev-requirements.txt
 pre-commit install
 ```
 
