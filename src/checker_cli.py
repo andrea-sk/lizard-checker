@@ -37,7 +37,7 @@ def get_args():
     parser.add_argument(
         "--export-json",
         required=False,
-        help="Export .avro feeds in json format",
+        help="Export .avro feeds in json format for further checks",
         action="store_true",
         default=False,
     )
