@@ -18,14 +18,17 @@ pip install .
 
 ```sh
 $ dif-checker -h
-usage: dif-checker [-h] AVRO_PATH CHECKS_FILE
+usage: dif-checker [-h] [--export-json] AVRO_PATH CHECKS_FILE
+
+Run tests on .avro DIF file
 
 positional arguments:
-  AVRO_PATH    Path of the folder containing .avro files from DIF pipeline
-  CHECKS_FILE  .json file containing checks for feeds in AVRO_PATH
+  AVRO_PATH      Path of the folder containing .avro files from DIF pipeline
+  CHECKS_FILE    .json file containing checks for feeds in AVRO_PATH
 
 optional arguments:
-  -h, --help   show this help message and exit
+  -h, --help     show this help message and exit
+  --export-json  Export .avro feeds in json format for further checks
 ```
 
 The `dif-checker` command relies on a folder containing `.avro` files and a `.json` listing checks that will be
