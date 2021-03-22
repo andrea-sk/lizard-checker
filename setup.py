@@ -14,6 +14,7 @@ setup(
     author="Andrea Dodet",
     author_email="andrea.dodet@mail-bip.com",
     install_requires=["fastavro"],
-    packages=find_packages("src"),
-    entry_points={"console_scripts": ["dif-checker=src.checker_cli:main"]},
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    entry_points={"console_scripts": ["dif-checker=checker_cli:main"]},
 )

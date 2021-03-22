@@ -75,3 +75,26 @@ It is possible to use the `common_checks` block to declare tests that will be ap
   ]
 }
 ```
+
+## Contributing
+
+After creating a virtual environment you can install the package in edit-mode via pip:
+
+```sh
+pip install -e .
+```
+
+The repo relies on `pre-commit` hooks to check for code style compliance and format:
+
+```sh
+pip
+install -r dev-requirements.txt
+pre-commit install
+```
+
+Now you're all set up.
+
+### Disclaimer
+
+This package (albeit working fine) is a POC and should go through a round of refactoring to make it
+easier to work with/extend in the future.

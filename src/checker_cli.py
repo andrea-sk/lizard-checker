@@ -1,6 +1,7 @@
 import json
 import argparse
-from .checker import run_checks
+from utils import bcolors
+from checker import run_checks
 
 
 def main():
@@ -9,7 +10,11 @@ def main():
 
     with open(args.checks_file, "r") as f:
         checks = json.load(f)
-    run_checks(avro_path, checks)
+    res = run_checks(avro_path, checks)
+    print("")
+    print("~" * 50)
+    print(f"{bcolors.OKGREEN}PASSED: {res['passed']}{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}FAILED: {res['failed']}{bcolors.ENDC}")
 
 
 def get_args():
