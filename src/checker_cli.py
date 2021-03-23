@@ -22,13 +22,9 @@ def main():
                 data = utils.read_avro(file)
                 feed_class = DifOutput(data)  # init feed class
 
-                # Common checks block
-                for expr in common_checks:
-                    feed_class.check_expr(expr)
-
-                # Feed-specific tests
-                for expr in checks:
-                    feed_class.check_expr(expr)
+                # Run checks
+                [feed_class.check_expr(e) for e in common_checks]
+                [feed_class.check_expr(e) for e in checks]
 
                 # Update counter for final reporting
                 results["passed"] += feed_class.passed
