@@ -14,7 +14,7 @@ def main():
     common_checks = checks["common_checks"]
     feeds = checks["feeds"]
 
-    results = {"passed": 0, "failed": 0}
+    results = {"passed": 0, "failed": 0, "warnings": 0}
     for feed in feeds:
         for glob_expr, checks in feed.items():
             files = glob.glob(os.path.join(args.avro_path, glob_expr))
@@ -33,6 +33,7 @@ def main():
                 # Update counter for final reporting
                 results["passed"] += feed_class.passed
                 results["failed"] += feed_class.failed
+                results["warnings"] += feed_class.warning
 
                 # Export feed in .json format if requested
                 if args.export_json:
@@ -44,6 +45,7 @@ def main():
     print("~" * 50)
     print(f"{utils.bcolors.OKGREEN}PASSED: {results['passed']}{utils.bcolors.ENDC}")
     print(f"{utils.bcolors.FAIL}FAILED: {results['failed']}{utils.bcolors.ENDC}")
+    print(f"{utils.bcolors.WARNING}WARNINGS: {results['warnings']}{utils.bcolors.ENDC}")
 
     return results
 
