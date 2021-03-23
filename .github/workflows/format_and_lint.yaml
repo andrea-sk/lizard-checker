@@ -1,4 +1,4 @@
-name: run-pytest
+name: format-and-test
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
           pip install -e .
       - name: Lint with flake8
         run: |
-          flake8 --setup=./setup.cfg src/
+          flake8 --config=./setup.cfg src/
       - name: Check code formatting
         run: |
-          black --setup=./setup.cfg /src
+          black --config=./setup.cfg /src
