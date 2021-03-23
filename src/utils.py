@@ -1,7 +1,6 @@
-import os
 from datetime import datetime
-import json
 import fastavro
+import json
 
 
 def read_avro(file_path):
@@ -21,28 +20,6 @@ def read_avro(file_path):
             res.append(record)
 
     return res[0]  # we need just one record to run tests
-
-
-def export_json(data, file, output_folder=None):
-    """
-    Export data to .json format
-
-    :param data: A dict containing data to be exported
-    :type data: dict
-    :param file: original .avro filename
-    :type file: str
-    :param output_folder: Folder in which dump .json files
-    :type output_folder: str, optional
-    """
-    filename = os.path.split(file)[1].split(".")[0]
-
-    if output_folder:
-        output_path = os.path.join(output_folder, filename)
-    else:
-        output_path = os.path.join(filename)
-
-    with open(f"{output_path}.json", "w") as f:
-        json.dump(data, f)
 
 
 def validate_timestamp(timestamp, territory=None):
@@ -71,6 +48,12 @@ def validate_timestamp(timestamp, territory=None):
         return True
     except ValueError:
         return False
+
+
+def read_checks(fpath):
+    with open(fpath, "r") as f:
+        checks = json.load(f)
+    return checks
 
 
 class bcolors:

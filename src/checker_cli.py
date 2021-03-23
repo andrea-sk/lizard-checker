@@ -1,22 +1,51 @@
-import json
 import argparse
-from utils import bcolors
-from checker import run_checks
+import utils
+from checker import DifOutput
+import glob
+import os
 
 
 def main():
+    # TODO: add execution time prompt
     args = get_args()
-    avro_path = args.avro_path
+    # TODO: should this be factored out in order to be unit-testable?
+    checks = utils.read_checks(args.checks_file)
 
-    with open(args.checks_file, "r") as f:
-        checks = json.load(f)
-    res = run_checks(avro_path, checks, args.export_json)
+    common_checks = checks["common_checks"]
+    feeds = checks["feeds"]
 
-    # Print results
+    results = {"passed": 0, "failed": 0}
+    for feed in feeds:
+        for glob_expr, checks in feed.items():
+            files = glob.glob(os.path.join(args.avro_path, glob_expr))
+            for file in files:
+                data = utils.read_avro(file)
+                feed_class = DifOutput(data)  # init feed class
+
+                # Common checks block
+                for expr in common_checks:
+                    feed_class.check_expr(expr)
+
+                # Feed-specific tests
+                for expr in checks:
+                    feed_class.check_expr(expr)
+
+                # Update counter for final reporting
+                results["passed"] += feed_class.passed
+                results["failed"] += feed_class.failed
+
+                # Export feed in .json format if requested
+                if args.export_json:
+                    fname = os.path.split(file)[1].split(".")[0]
+                    feed_class.data_to_json(fname)
+
+    # Pretty print test results
     print("")
     print("~" * 50)
-    print(f"{bcolors.OKGREEN}PASSED: {res['passed']}{bcolors.ENDC}")
-    print(f"{bcolors.FAIL}FAILED: {res['failed']}{bcolors.ENDC}")
+    print(f"{utils.bcolors.OKGREEN}PASSED: {results['passed']}{utils.bcolors.ENDC}")
+    print(f"{utils.bcolors.FAIL}FAILED: {results['failed']}{utils.bcolors.ENDC}")
+
+    return results
 
 
 def get_args():
