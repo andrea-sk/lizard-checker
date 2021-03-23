@@ -1,5 +1,6 @@
 from datetime import datetime
 import fastavro
+import json
 
 
 def read_avro(file_path):
@@ -47,6 +48,12 @@ def validate_timestamp(timestamp, territory=None):
         return True
     except ValueError:
         return False
+
+
+def read_checks(fpath):
+    with open(fpath, "r") as f:
+        checks = json.load(f)
+    return checks
 
 
 class bcolors:
