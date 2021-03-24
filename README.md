@@ -6,6 +6,7 @@ Check DIF ouput data in a declarative way using a single cli command.
 
 ## Install
 
+_This library relies on Python >= 3.8.x_  
 Clone this repo and install it using `pip`:
 
 ```sh
