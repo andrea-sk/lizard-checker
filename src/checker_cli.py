@@ -21,6 +21,7 @@ def main():
             for file in files:
                 data = utils.read_avro(file)
                 feed_class = DifOutput(data)  # init feed class
+                print(feed_class.data)
 
                 # Run checks
                 [feed_class.check_expr(e) for e in common_checks]
